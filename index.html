@@ -62,6 +62,7 @@ dialog::backdrop{background:rgba(0,0,0,.55)}
 .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
 footer{text-align:center;color:var(--mu);font-size:13px;padding:20px}
 .acts{flex-wrap:wrap}.acts .mp{flex:1 1 100%;background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
+.dim{opacity:.6}.cl{bottom:8px;inset-inline-end:10px;background:#e5484d;color:#fff}.own{display:flex;flex-wrap:wrap;gap:2px 14px;border-top:1px solid var(--bd);margin-top:8px;padding-top:6px}.own .link{font-size:13px}.spec .ng{color:var(--ac);font-weight:600}
 </style>
 </head>
 <body>
@@ -80,6 +81,10 @@ footer{text-align:center;color:var(--mu);font-size:13px;padding:20px}
 <div><label data-i="beds"></label><select id="beds"></select></div>
 <div><label data-i="amin"></label><input id="amin" type="number" min="0" inputmode="numeric"></div>
 <div><label data-i="sort"></label><select id="sort"></select></div>
+<div><label data-i="own"></label><select id="own"></select></div>
+<div><label data-i="furn"></label><select id="furn"></select></div>
+<div><label data-i="age"></label><select id="age"></select></div>
+<div style="display:flex;align-items:end"><label style="display:flex;gap:8px;align-items:center;font-size:14px;color:var(--tx);padding-bottom:10px"><input type="checkbox" id="neg" style="width:auto"><span data-i="negf"></span></label></div>
 <div class="fx"><button class="link" id="reset" data-i="reset"></button><button class="btn" id="fclose" data-i="show"></button></div>
 </div>
 <div class="meta" id="count"></div>
@@ -99,22 +104,30 @@ footer{text-align:center;color:var(--mu);font-size:13px;padding:20px}
 <div><label data-i="baths"></label><input name="baths" type="number" min="0" max="20" value="2" inputmode="numeric"></div>
 <div><label data-i="area"></label><input name="area" type="number" min="1" required inputmode="numeric"></div>
 <div><label data-i="phone"></label><input name="phone" type="tel" required placeholder="07XX XXX XXXX" dir="ltr"></div>
+<div><label data-i="own"></label><select name="own"></select></div>
+<div><label data-i="furn"></label><select name="furn"></select></div>
+<div><label data-i="age"></label><select name="age"></select></div>
+<div><label data-i="floor"></label><input name="floor" type="number" min="0" max="100" inputmode="numeric"></div>
+<div class="full"><label style="display:flex;gap:8px;align-items:center;font-size:14px;color:var(--tx)"><input type="checkbox" name="neg" style="width:auto"><span data-i="neg"></span></label></div>
 <div class="full"><label data-i="map"></label><input name="loc" dir="ltr" placeholder="https://maps.app.goo.gl/...  /  33.3152, 44.3661"><div style="font-size:12px;color:var(--mu)" data-i="maphint"></div><button type="button" class="link" id="myloc" data-i="myloc"></button></div>
 <div class="full"><label data-i="desc"></label><textarea name="desc" rows="3" maxlength="400"></textarea></div>
-<div class="row full"><button type="button" class="btn sec" id="cancel" data-i="cancel"></button><button class="btn" type="submit" data-i="publish"></button></div>
+<div class="row full"><button type="button" class="btn sec" id="cancel" data-i="cancel"></button><button class="btn" type="submit" id="pub" data-i="publish"></button></div>
 </form></dialog>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import{getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import{getFirestore,collection,addDoc,deleteDoc,doc,onSnapshot,query,orderBy,limit,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import{getFirestore,collection,addDoc,updateDoc,deleteDoc,doc,onSnapshot,query,orderBy,limit,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 // الصق إعدادات مشروعك من Firebase Console هنا / paste your Firebase config here
 const firebaseConfig={apiKey:"AIzaSyBBr8-4JxczuFJXbJ7F8zNQhdKcYbZZEC8",authDomain:"estates-502c4.firebaseapp.com",projectId:"estates-502c4",storageBucket:"estates-502c4.firebasestorage.app",messagingSenderId:"201310146198",appId:"1:201310146198:web:341f98d4069a900d97bcb7"};
 const RATE=1520;
 const CITIES=[["baghdad","بغداد","Baghdad"],["basra","البصرة","Basra"],["nineveh","الموصل","Mosul"],["erbil","أربيل","Erbil"],["sulaymaniyah","السليمانية","Sulaymaniyah"],["duhok","دهوك","Duhok"],["kirkuk","كركوك","Kirkuk"],["najaf","النجف","Najaf"],["karbala","كربلاء","Karbala"],["anbar","الرمادي","Ramadi"],["diyala","بعقوبة","Baqubah"],["babil","الحلة","Hillah"],["wasit","الكوت","Kut"],["dhiqar","الناصرية","Nasiriyah"],["maysan","العمارة","Amarah"],["muthanna","السماوة","Samawah"],["qadisiyyah","الديوانية","Diwaniyah"],["salahaldin","تكريت","Tikrit"],["halabja","حلبجة","Halabja"]];
 const TYPES=[["house","بيت","House","🏡"],["apartment","شقة","Apartment","🏢"],["villa","فيلا","Villa","🏘️"],["land","أرض","Land","🟫"],["shop","محل تجاري","Shop","🏪"],["office","مكتب","Office","💼"]];
-const T={ar:{brand:"عقارات العراق",add:"+ أضف عقارك",h1:"ابحث عن بيتك في أي مدينة عراقية",sub:"بيع وإيجار بيوت وشقق وأراضي في جميع المحافظات",q:"بحث بالكلمات",city:"المدينة",ptype:"نوع العقار",pmin:"أقل سعر ($)",pmax:"أعلى سعر ($)",beds:"غرف النوم",amin:"أقل مساحة (م²)",sort:"الترتيب",reset:"مسح الفلاتر",all:"الكل",allC:"كل المدن",allT:"كل الأنواع",any:"أي عدد",sale:"للبيع",rent:"للإيجار",newest:"الأحدث",pa:"السعر: الأقل أولاً",pd:"السعر: الأعلى أولاً",aD:"المساحة: الأكبر",found:n=>`${n} عقار`,none:"لا توجد نتائج مطابقة",call:"اتصل بالمالك",mo:"/شهرياً",bed:"غرف",bath:"حمامات",m2:"م²",foot:"عقارات العراق © 2026",addT:"أضف عقارك",fTitle:"عنوان الإعلان",mode:"نوع العرض",hood:"الحي / المنطقة",price:"السعر",cur:"العملة",baths:"الحمامات",area:"المساحة (م²)",phone:"رقم الهاتف",desc:"وصف",cancel:"إلغاء",publish:"نشر الإعلان",lang:"English",del:"حذف إعلاني",delq:"هل تريد حذف هذا الإعلان؟",err:"تعذّر النشر، حاول مرة أخرى",flt:"تصفية",wa:"واتساب",newb:"جديد",now:"الآن",show:"عرض النتائج",map:"موقع العقار على Google Maps (اختياري)",maphint:"افتح Google Maps ← اختر المكان ← مشاركة ← نسخ الرابط، ثم الصقه هنا",myloc:"📍 استخدم موقعي الحالي",maperr:"رابط الموقع غير صحيح. الصق رابط Google Maps أو الإحداثيات",openmap:"افتح في Google Maps",wmsg:"مرحباً، أنا مهتم بإعلانك: "},
-en:{brand:"Iraq Estates",add:"+ List property",h1:"Find your home in any Iraqi city",sub:"Houses, apartments and land for sale or rent across all governorates",q:"Keyword search",city:"City",ptype:"Property type",pmin:"Min price ($)",pmax:"Max price ($)",beds:"Bedrooms",amin:"Min area (m²)",sort:"Sort by",reset:"Clear filters",all:"All",allC:"All cities",allT:"All types",any:"Any",sale:"For sale",rent:"For rent",newest:"Newest",pa:"Price: low to high",pd:"Price: high to low",aD:"Area: largest",found:n=>`${n} propert${n==1?"y":"ies"}`,none:"No matching results",call:"Call owner",mo:"/month",bed:"beds",bath:"baths",m2:"m²",foot:"Iraq Estates © 2026",addT:"List your property",fTitle:"Listing title",mode:"Listing type",hood:"Neighborhood",price:"Price",cur:"Currency",baths:"Bathrooms",area:"Area (m²)",phone:"Phone number",desc:"Description",cancel:"Cancel",publish:"Publish listing",lang:"العربية",del:"Delete my listing",delq:"Delete this listing?",err:"Could not publish, please try again",flt:"Filters",wa:"WhatsApp",newb:"New",now:"Just now",show:"Show results",map:"Property location on Google Maps (optional)",maphint:"Open Google Maps, pick the place, tap Share, Copy link, then paste it here",myloc:"📍 Use my current location",maperr:"Invalid location. Paste a Google Maps link or coordinates",openmap:"Open in Google Maps",wmsg:"Hello, I'm interested in your listing: "}};
-let lang=localStorage.getItem("lang")||"ar",mode="",user=[];
+const OWN=[["tapu","طابو صرف","Tapu (freehold)"],["residential","سند سكني","Residential deed"],["agri","عقد زراعي","Agricultural contract"],["other","أخرى","Other"]];
+const FURN=[["yes","مؤثث","Furnished"],["no","غير مؤثث","Unfurnished"]];
+const AGE=[["new","جديد","New"],["0-5","0–5 سنوات","0–5 years"],["5-15","5–15 سنة","5–15 years"],["15+","أكثر من 15 سنة","15+ years"]];
+const T={ar:{brand:"عقارات العراق",add:"+ أضف عقارك",h1:"ابحث عن بيتك في أي مدينة عراقية",sub:"بيع وإيجار بيوت وشقق وأراضي في جميع المحافظات",q:"بحث بالكلمات",city:"المدينة",ptype:"نوع العقار",pmin:"أقل سعر ($)",pmax:"أعلى سعر ($)",beds:"غرف النوم",amin:"أقل مساحة (م²)",sort:"الترتيب",reset:"مسح الفلاتر",all:"الكل",allC:"كل المدن",allT:"كل الأنواع",any:"أي عدد",sale:"للبيع",rent:"للإيجار",newest:"الأحدث",pa:"السعر: الأقل أولاً",pd:"السعر: الأعلى أولاً",aD:"المساحة: الأكبر",found:n=>`${n} عقار`,none:"لا توجد نتائج مطابقة",call:"اتصل بالمالك",mo:"/شهرياً",bed:"غرف",bath:"حمامات",m2:"م²",foot:"عقارات العراق © 2026",addT:"أضف عقارك",fTitle:"عنوان الإعلان",mode:"نوع العرض",hood:"الحي / المنطقة",price:"السعر",cur:"العملة",baths:"الحمامات",area:"المساحة (م²)",phone:"رقم الهاتف",desc:"وصف",cancel:"إلغاء",publish:"نشر الإعلان",lang:"English",del:"حذف إعلاني",delq:"هل تريد حذف هذا الإعلان؟",err:"تعذّر النشر، حاول مرة أخرى",flt:"تصفية",wa:"واتساب",newb:"جديد",now:"الآن",show:"عرض النتائج",map:"موقع العقار على Google Maps (اختياري)",maphint:"افتح Google Maps ← اختر المكان ← مشاركة ← نسخ الرابط، ثم الصقه هنا",myloc:"📍 استخدم موقعي الحالي",maperr:"رابط الموقع غير صحيح. الصق رابط Google Maps أو الإحداثيات",openmap:"افتح في Google Maps",own:"نوع الملكية",furn:"التأثيث",age:"عمر العقار",floor:"رقم الطابق",neg:"السعر قابل للتفاوض",negf:"قابل للتفاوض فقط",negb:"قابل للتفاوض",allO:"كل أنواع الملكية",allF:"مؤثث وغير مؤثث",allA:"أي عمر",na:"غير محدد",fl:"الطابق",editT:"تعديل الإعلان",save:"حفظ التعديلات",edit:"تعديل",mk:"تم البيع/التأجير",reopen:"إعادة فتح",renew:"تجديد",sold:"تم البيع",rented:"تم التأجير",exp:"منتهي — جدّد",wmsg:"مرحباً، أنا مهتم بإعلانك: "},
+en:{brand:"Iraq Estates",add:"+ List property",h1:"Find your home in any Iraqi city",sub:"Houses, apartments and land for sale or rent across all governorates",q:"Keyword search",city:"City",ptype:"Property type",pmin:"Min price ($)",pmax:"Max price ($)",beds:"Bedrooms",amin:"Min area (m²)",sort:"Sort by",reset:"Clear filters",all:"All",allC:"All cities",allT:"All types",any:"Any",sale:"For sale",rent:"For rent",newest:"Newest",pa:"Price: low to high",pd:"Price: high to low",aD:"Area: largest",found:n=>`${n} propert${n==1?"y":"ies"}`,none:"No matching results",call:"Call owner",mo:"/month",bed:"beds",bath:"baths",m2:"m²",foot:"Iraq Estates © 2026",addT:"List your property",fTitle:"Listing title",mode:"Listing type",hood:"Neighborhood",price:"Price",cur:"Currency",baths:"Bathrooms",area:"Area (m²)",phone:"Phone number",desc:"Description",cancel:"Cancel",publish:"Publish listing",lang:"العربية",del:"Delete my listing",delq:"Delete this listing?",err:"Could not publish, please try again",flt:"Filters",wa:"WhatsApp",newb:"New",now:"Just now",show:"Show results",map:"Property location on Google Maps (optional)",maphint:"Open Google Maps, pick the place, tap Share, Copy link, then paste it here",myloc:"📍 Use my current location",maperr:"Invalid location. Paste a Google Maps link or coordinates",openmap:"Open in Google Maps",own:"Ownership type",furn:"Furnishing",age:"Property age",floor:"Floor number",neg:"Price is negotiable",negf:"Negotiable only",negb:"Negotiable",allO:"All ownership types",allF:"Furnished & unfurnished",allA:"Any age",na:"Not specified",fl:"Floor",editT:"Edit listing",save:"Save changes",edit:"Edit",mk:"Mark sold/rented",reopen:"Reopen",renew:"Renew",sold:"Sold",rented:"Rented",exp:"Expired — renew",wmsg:"Hello, I'm interested in your listing: "}};
+let lang=localStorage.getItem("lang")||"ar",mode="",user=[],editId=null;
 const fb=initializeApp(firebaseConfig),auth=getAuth(fb),db=getFirestore(fb);
 const CK=new Set(CITIES.map(c=>c[0])),TK=new Set(TYPES.map(t=>t[0]));
 onSnapshot(query(collection(db,"listings"),orderBy("createdAt","desc"),limit(200)),sn=>{user=sn.docs.map(d=>({...d.data(),id:d.id,t:d.data().createdAt?.toMillis?.()||Date.now()})).filter(x=>CK.has(x.city)&&TK.has(x.type));render()},()=>{});
@@ -130,51 +143,57 @@ function setLang(){
  $$("[data-i]").forEach(e=>e.textContent=d[e.dataset.i]);
  $("#lang").textContent=d.lang;$("#q").placeholder="🔍 "+d.q;
  $$(".tab").forEach(t=>t.textContent=t.dataset.m==""?d.all:d[t.dataset.m]);
- const keep={city:$("#city").value,ptype:$("#ptype").value,beds:$("#beds").value,sort:$("#sort").value};
+ const keep={city:$("#city").value,ptype:$("#ptype").value,beds:$("#beds").value,sort:$("#sort").value,own:$("#own").value,furn:$("#furn").value,age:$("#age").value};
  $("#city").innerHTML=opt("",d.allC)+CITIES.map(c=>opt(c[0],nm(c))).join("");
  $("#ptype").innerHTML=opt("",d.allT)+TYPES.map(c=>opt(c[0],nm(c))).join("");
  $("#beds").innerHTML=opt("",d.any)+[1,2,3,4,5].map(n=>opt(n,n+"+")).join("");
- $("#sort").innerHTML=opt("new",d.newest)+opt("pa",d.pa)+opt("pd",d.pd)+opt("ad",d.aD);
+ $("#own").innerHTML=opt("",d.allO)+OWN.map(o=>opt(o[0],nm(o))).join("");$("#furn").innerHTML=opt("",d.allF)+FURN.map(o=>opt(o[0],nm(o))).join("");$("#age").innerHTML=opt("",d.allA)+AGE.map(o=>opt(o[0],nm(o))).join("");$("#sort").innerHTML=opt("new",d.newest)+opt("pa",d.pa)+opt("pd",d.pd)+opt("ad",d.aD);
  for(const k in keep)if(keep[k])$("#"+k).value=keep[k];
  const f=$("#form");
  f.city.innerHTML=CITIES.map(c=>opt(c[0],nm(c))).join("");
  f.type.innerHTML=TYPES.map(c=>opt(c[0],nm(c))).join("");
- f.mode.innerHTML=opt("sale",d.sale)+opt("rent",d.rent);
+ f.own.innerHTML=OWN.map(o=>opt(o[0],nm(o))).join("");f.furn.innerHTML=opt("",d.na)+FURN.map(o=>opt(o[0],nm(o))).join("");f.age.innerHTML=opt("",d.na)+AGE.map(o=>opt(o[0],nm(o))).join("");f.mode.innerHTML=opt("sale",d.sale)+opt("rent",d.rent);
  render();
 }
 function render(){
  const d=T[lang],q=$("#q").value.trim().toLowerCase(),c=$("#city").value,p=$("#ptype").value,
- mn=+$("#pmin").value||0,mx=+$("#pmax").value||Infinity,b=+$("#beds").value||0,am=+$("#amin").value||0;
- let r=user.filter(x=>(!mode||x.mode==mode)&&(!c||x.city==c)&&(!p||x.type==p)&&usd(x)>=mn&&usd(x)<=mx&&x.beds>=b&&x.area>=am&&
+ mn=+$("#pmin").value||0,mx=+$("#pmax").value||Infinity,b=+$("#beds").value||0,am=+$("#amin").value||0,ow=$("#own").value,fu=$("#furn").value,ag=$("#age").value,ng=$("#neg").checked;
+ let r=user.filter(x=>(!mode||x.mode==mode)&&(!c||x.city==c)&&(!p||x.type==p)&&usd(x)>=mn&&usd(x)<=mx&&x.beds>=b&&x.area>=am&&vis(x)&&(!ow||x.own==ow)&&(!fu||x.furn==fu)&&(!ag||x.age==ag)&&(!ng||x.neg)&&
   (!q||(txt(x.title)+" "+txt(x.hood)+" "+(x.desc||"")+" "+nm(CITIES.find(k=>k[0]==x.city))).toLowerCase().includes(q)));
  const s=$("#sort").value;
  r.sort((a,b)=>s=="pa"?usd(a)-usd(b):s=="pd"?usd(b)-usd(a):s=="ad"?b.area-a.area:b.t-a.t);
  $("#count").textContent=d.found(r.length);
  const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
- const n=["city","ptype","pmin","pmax","beds","amin"].filter(i=>$("#"+i).value).length+(s!="new"?1:0);$("#fcount").textContent=n||"";
+ const n=["city","ptype","pmin","pmax","beds","amin","own","furn","age"].filter(i=>$("#"+i).value).length+(s!="new"?1:0)+($("#neg").checked?1:0);$("#fcount").textContent=n||"";
  $("#grid").innerHTML=r.length?r.map(x=>{
-  const ty=TYPES.find(k=>k[0]==x.type),ci=CITIES.find(k=>k[0]==x.city),mine=auth.currentUser&&x.uid==auth.currentUser.uid;
+  const ty=TYPES.find(k=>k[0]==x.type),ci=CITIES.find(k=>k[0]==x.city),mine=auth.currentUser&&x.uid==auth.currentUser.uid,cl=x.status=="closed",ex=Date.now()-x.t>=5184e6;
   const pr=(x.cur=="USD"?"$"+x.price.toLocaleString("en"):x.price.toLocaleString("en")+" IQD")+(x.mode=="rent"?d.mo:"");
-  return `<article class="card"><div class="thumb">${ty[3]}<span class="badge ${x.mode}">${d[x.mode]}</span>${Date.now()-x.t<172800000?`<span class="nw">${d.newb}</span>`:""}<span class="ago">🕒 ${ago(x.t)}</span></div><div class="cb"><h3>${esc(txt(x.title))}</h3><div class="price">${pr}</div><div class="loc">📍 ${nm(ci)}${x.hood&&txt(x.hood)?" — "+esc(txt(x.hood)):""}</div><div class="spec"><span>${nm(ty)}</span><span>${x.area} ${d.m2}</span>${x.beds?`<span>🛏 ${x.beds} ${d.bed}</span>`:""}${x.baths?`<span>🚿 ${x.baths} ${d.bath}</span>`:""}</div>${x.desc?`<div class="loc">${esc(x.desc)}</div>`:""}<div class="acts"><a class="call" href="tel:${esc(x.phone)}" dir="ltr">📞 ${d.call}</a>${safeMap(x.map)?`<a class="mp" href="${esc(safeMap(x.map))}" target="_blank" rel="noopener">🗺️ ${d.openmap}</a>`:""}<a class="wa" href="https://wa.me/${waNum(x.phone)}?text=${encodeURIComponent(d.wmsg+txt(x.title))}" target="_blank" rel="noopener">💬 ${d.wa}</a></div>${mine?`<button class="link" data-del="${x.id}">🗑 ${d.del}</button>`:""}</div></article>`}).join(""):`<div class="empty">${d.none}</div>`;
+  return `<article class="card${cl||ex?" dim":""}"><div class="thumb">${ty[3]}<span class="badge ${x.mode}">${d[x.mode]}</span>${Date.now()-x.t<172800000?`<span class="nw">${d.newb}</span>`:""}${cl||ex?`<span class="cl">${cl?(x.mode=="rent"?d.rented:d.sold):d.exp}</span>`:""}<span class="ago">🕒 ${ago(x.t)}</span></div><div class="cb"><h3>${esc(txt(x.title))}</h3><div class="price">${pr}</div><div class="loc">📍 ${nm(ci)}${x.hood&&txt(x.hood)?" — "+esc(txt(x.hood)):""}</div><div class="spec"><span>${nm(ty)}</span><span>${x.area} ${d.m2}</span>${x.beds?`<span>🛏 ${x.beds} ${d.bed}</span>`:""}${x.baths?`<span>🚿 ${x.baths} ${d.bath}</span>`:""}${x.floor?`<span>🏢 ${d.fl} ${x.floor}</span>`:""}${x.furn?`<span>🛋 ${lab(FURN,x.furn)}</span>`:""}</div>${x.own||x.age||x.neg?`<div class="spec">${x.own?`<span>📄 ${lab(OWN,x.own)}</span>`:""}${x.age?`<span>🗓 ${lab(AGE,x.age)}</span>`:""}${x.neg?`<span class="ng">🤝 ${d.negb}</span>`:""}</div>`:""}${x.desc?`<div class="loc">${esc(x.desc)}</div>`:""}<div class="acts"><a class="call" href="tel:${esc(x.phone)}" dir="ltr">📞 ${d.call}</a>${safeMap(x.map)?`<a class="mp" href="${esc(safeMap(x.map))}" target="_blank" rel="noopener">🗺️ ${d.openmap}</a>`:""}<a class="wa" href="https://wa.me/${waNum(x.phone)}?text=${encodeURIComponent(d.wmsg+txt(x.title))}" target="_blank" rel="noopener">💬 ${d.wa}</a></div>${mine?`<div class="own"><button class="link" data-act="edit" data-id="${x.id}">✏️ ${d.edit}</button><button class="link" data-act="close" data-id="${x.id}">${cl?"↩️ "+d.reopen:"✅ "+d.mk}</button><button class="link" data-act="renew" data-id="${x.id}">🔄 ${d.renew}</button><button class="link" data-act="del" data-id="${x.id}">🗑 ${d.del}</button></div>`:""}</div></article>`}).join(""):`<div class="empty">${d.none}</div>`;
 }
 function safeMap(u){try{const p=new URL(u),h=p.hostname;return p.protocol=="https:"&&((/(^|\.)google\.[a-z.]+$/.test(h)&&(h.startsWith("maps.")||p.pathname.startsWith("/maps")))||h=="maps.app.goo.gl"||h=="goo.gl")?u:""}catch(e){return ""}}
 function normMap(v){v=(v||"").trim();if(!v)return "";if(/^-?\d{1,3}(\.\d+)?\s*,\s*-?\d{1,3}(\.\d+)?$/.test(v))return "https://www.google.com/maps?q="+v.replace(/\s/g,"");const m=v.match(/https:\/\/\S+/);return m&&safeMap(m[0])&&m[0].length<=300?m[0]:null}
+const lab=(A,v)=>{const o=A.find(z=>z[0]==v);return o?nm(o):""};
+function vis(x){return (auth.currentUser&&x.uid==auth.currentUser.uid)||(x.status!="closed"&&Date.now()-x.t<5184e6)}
+function openForm(x){const f=$("#form"),d=T[lang];editId=x?x.id:null;f.reset();
+ if(x){for(const k of["mode","type","city","price","cur","beds","baths","area","phone","desc","own","furn","age","floor"])f[k].value=x[k]??"";f.title.value=txt(x.title);f.hood.value=txt(x.hood||"");f.loc.value=x.map||"";f.neg.checked=!!x.neg}
+ $("#dlg h3").textContent=x?d.editT:d.addT;$("#pub").textContent=x?d.save:d.publish;$("#dlg").showModal()}
 function waNum(p){let n=String(p).replace(/\D/g,"");if(n.startsWith("00"))n=n.slice(2);else if(n.startsWith("0"))n="964"+n.slice(1);return n}
 function ago(t){const m=Math.max(0,(Date.now()-t)/6e4);if(m<1)return T[lang].now;const h=m/60,dy=h/24,u=m<60?"minute":h<24?"hour":dy<30?"day":"month",v=m<60?m:h<24?h:dy<30?dy:dy/30;return new Intl.RelativeTimeFormat(lang=="ar"?"ar-u-nu-latn":"en",{numeric:"auto"}).format(-Math.floor(v),u)}
 $$(".tab").forEach(t=>t.onclick=()=>{mode=t.dataset.m;$$(".tab").forEach(x=>x.classList.toggle("on",x==t));render()});
-["q","city","ptype","pmin","pmax","beds","amin","sort"].forEach(i=>$("#"+i).addEventListener("input",render));
-$("#reset").onclick=()=>{["q","pmin","pmax","amin"].forEach(i=>$("#"+i).value="");["city","ptype","beds"].forEach(i=>$("#"+i).value="");$("#sort").value="new";mode="";$$(".tab").forEach((x,i)=>x.classList.toggle("on",i==0));render()};
+["q","city","ptype","pmin","pmax","beds","amin","sort","own","furn","age","neg"].forEach(i=>$("#"+i).addEventListener("input",render));
+$("#reset").onclick=()=>{["q","pmin","pmax","amin"].forEach(i=>$("#"+i).value="");["city","ptype","beds","own","furn","age"].forEach(i=>$("#"+i).value="");$("#neg").checked=false;$("#sort").value="new";mode="";$$(".tab").forEach((x,i)=>x.classList.toggle("on",i==0));render()};
 $("#lang").onclick=()=>{lang=lang=="ar"?"en":"ar";try{localStorage.setItem("lang",lang)}catch(e){}setLang()};
-$("#add").onclick=async()=>{try{if(!auth.currentUser)await signInWithPopup(auth,new GoogleAuthProvider());$("#dlg").showModal()}catch(e){}};
+$("#add").onclick=async()=>{try{if(!auth.currentUser)await signInWithPopup(auth,new GoogleAuthProvider());openForm()}catch(e){}};
 $("#fbtn").onclick=()=>$("#fp").classList.toggle("open");$("#fclose").onclick=()=>$("#fp").classList.remove("open");
 $("#myloc").onclick=()=>navigator.geolocation&&navigator.geolocation.getCurrentPosition(p=>{$("#form").loc.value=p.coords.latitude.toFixed(6)+", "+p.coords.longitude.toFixed(6)},()=>{},{enableHighAccuracy:true});
 $("#cancel").onclick=()=>$("#dlg").close();
 $("#form").onsubmit=async e=>{
  const f=e.target,u=auth.currentUser;if(!u)return;const mp=normMap(f.loc.value);if(mp===null){e.preventDefault();alert(T[lang].maperr);return}
- const o={uid:u.uid,title:f.title.value.trim(),mode:f.mode.value,type:f.type.value,city:f.city.value,hood:f.hood.value.trim(),price:+f.price.value,cur:f.cur.value,beds:+f.beds.value,baths:+f.baths.value,area:+f.area.value,phone:f.phone.value.trim(),desc:f.desc.value.trim(),map:mp,createdAt:serverTimestamp()};
- try{await addDoc(collection(db,"listings"),o);f.reset();window.scrollTo({top:0,behavior:"smooth"})}catch(x){alert(T[lang].err)}
+ const o={uid:u.uid,title:f.title.value.trim(),mode:f.mode.value,type:f.type.value,city:f.city.value,hood:f.hood.value.trim(),price:+f.price.value,cur:f.cur.value,beds:+f.beds.value,baths:+f.baths.value,area:+f.area.value,phone:f.phone.value.trim(),desc:f.desc.value.trim(),map:mp,own:f.own.value,furn:f.furn.value,age:f.age.value,floor:+f.floor.value||0,neg:f.neg.checked};
+ try{if(editId){const c=user.find(z=>z.id==editId);o.status=c&&c.status||"active";await updateDoc(doc(db,"listings",editId),o)}else{o.status="active";o.createdAt=serverTimestamp();await addDoc(collection(db,"listings"),o)}f.reset();window.scrollTo({top:0,behavior:"smooth"})}catch(x){alert(T[lang].err)}
 };
-$("#grid").addEventListener("click",async e=>{const b=e.target.closest("[data-del]");if(b&&confirm(T[lang].delq))try{await deleteDoc(doc(db,"listings",b.dataset.del))}catch(x){}});
+$("#grid").addEventListener("click",async e=>{const b=e.target.closest("[data-act]");if(!b)return;const id=b.dataset.id,x=user.find(z=>z.id==id),a=b.dataset.act,r=doc(db,"listings",id);if(!x)return;
+ try{if(a=="edit")openForm(x);else if(a=="del"){if(confirm(T[lang].delq))await deleteDoc(r)}else if(a=="close")await updateDoc(r,{status:x.status=="closed"?"active":"closed"});else if(a=="renew")await updateDoc(r,{createdAt:serverTimestamp()})}catch(x){alert(T[lang].err)}});
 setLang();setInterval(render,60000);
 </script>
 </body>
