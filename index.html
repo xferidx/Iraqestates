@@ -6,70 +6,73 @@
 <title>عقارات العراق | Iraq Estates</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f4ef;--card:#fff;--tx:#1d2a2e;--mu:#6a7679;--pr:#0f5c55;--pr2:#e9f3f1;--ac:#c8963e;--bd:#e3dfd5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121819;--card:#1b2325;--tx:#e9eeee;--mu:#9aa8aa;--pr:#3fb5a8;--pr2:#16312f;--ac:#e0b05a;--bd:#2c3739}}
-:root[data-theme="dark"]{--bg:#121819;--card:#1b2325;--tx:#e9eeee;--mu:#9aa8aa;--pr:#3fb5a8;--pr2:#16312f;--ac:#e0b05a;--bd:#2c3739}
+:root{--bg:#f4f6f9;--card:#fff;--tx:#14213a;--mu:#68758c;--pr:#14355e;--pr2:#e8eef7;--ac:#d99a2b;--bd:#e1e6ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1420;--card:#171f2e;--tx:#e8edf5;--mu:#93a0b5;--pr:#6ea8ff;--pr2:#1c2a44;--ac:#f0b955;--bd:#263149}}
+:root[data-theme="dark"]{--bg:#0e1420;--card:#171f2e;--tx:#e8edf5;--mu:#93a0b5;--pr:#6ea8ff;--pr2:#1c2a44;--ac:#f0b955;--bd:#263149}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--tx);font-family:'Cairo',system-ui,Tahoma,sans-serif;line-height:1.6}
-header{background:var(--pr);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
-.bar{max-width:1100px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:10px;justify-content:space-between}
-.logo{font-weight:700;font-size:20px}
-.logo span{color:#f3d48f}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--card)}
 button,select,input,textarea{font:inherit;color:inherit}
-.btn{background:var(--ac);color:#1d1a12;border:0;border-radius:10px;padding:8px 14px;font-weight:700;cursor:pointer}
-.btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5)}
-.hero{background:var(--pr);color:#fff;padding:22px 16px 60px;text-align:center}
-.hero h1{margin:0 0 4px;font-size:clamp(22px,5vw,34px)}
-.hero p{margin:0;opacity:.85}
-main{max-width:1100px;margin:-40px auto 40px;padding:0 16px}
-.filters{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
-.filters label{font-size:12px;color:var(--mu);display:block;margin-bottom:2px}
-.filters input,.filters select,.f input,.f select,.f textarea{width:100%;padding:9px 10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg)}
-.tabs{display:flex;gap:6px;grid-column:1/-1}
-.tab{flex:1;padding:9px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);cursor:pointer;font-weight:600}
-.tab.on{background:var(--pr);color:#fff;border-color:var(--pr)}
-.meta{display:flex;justify-content:space-between;align-items:center;margin:18px 2px 10px;color:var(--mu);flex-wrap:wrap;gap:8px}
-.link{background:none;border:0;color:var(--pr);cursor:pointer;font-weight:600}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
-.thumb{height:120px;display:flex;align-items:center;justify-content:center;font-size:52px;background:linear-gradient(135deg,var(--pr2),var(--bg));position:relative}
-.badge{position:absolute;top:10px;inset-inline-start:10px;background:var(--pr);color:#fff;font-size:12px;padding:2px 10px;border-radius:20px;font-family:inherit}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:12px;background:var(--bg)}
+header{background:var(--card);border-bottom:1px solid var(--bd);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.top{max-width:1100px;margin:auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.logo{font-weight:700;font-size:20px;display:flex;align-items:center;gap:8px}
+.logo i{width:36px;height:36px;border-radius:11px;background:var(--pr);display:grid;place-items:center;font-style:normal;font-size:18px}
+.btn{background:var(--pr);color:#fff;border:0;border-radius:12px;padding:9px 16px;font-weight:700;cursor:pointer;white-space:nowrap}
+:root:not([data-theme="light"]) .btn:not(.sec){color:#0e1420}
+.btn.sec{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
+main{max-width:1100px;margin:auto;padding:16px}
+.tool{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.seg{display:flex;background:var(--pr2);border-radius:13px;padding:3px}
+.tab{border:0;background:none;padding:7px 16px;border-radius:10px;font-weight:600;cursor:pointer;color:var(--mu)}
+.tab.on{background:var(--card);color:var(--pr);box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.sr{flex:1;min-width:150px}
+#fcount{background:var(--ac);color:#1d1a12;border-radius:20px;padding:0 8px;font-size:12px;margin-inline-start:6px}
+#fcount:empty{display:none}
+.fp{display:none;margin-top:12px;background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:14px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.fp.open{display:grid}
+.fp label,.f label{font-size:12px;color:var(--mu);display:block}
+.fx{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center}
+.link{background:none;border:0;color:var(--pr);cursor:pointer;font-weight:600;padding:4px 0;text-align:start}
+.meta{margin:18px 2px 10px;color:var(--mu);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.12)}
+.thumb{height:130px;display:flex;align-items:center;justify-content:center;font-size:54px;background:linear-gradient(135deg,var(--pr2),var(--bg));position:relative}
+.thumb span{position:absolute;font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px}
+.badge{top:10px;inset-inline-start:10px;background:var(--pr);color:#fff}
+:root:not([data-theme="light"]) .badge{color:#0e1420}
 .badge.rent{background:var(--ac);color:#1d1a12}
-.cb{padding:12px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.nw{top:10px;inset-inline-end:10px;background:#e5484d;color:#fff}
+.ago{bottom:8px;inset-inline-start:10px;background:var(--card);color:var(--mu);font-weight:600!important}
+.cb{padding:14px;display:flex;flex-direction:column;gap:5px;flex:1}
 .cb h3{margin:0;font-size:16px}
-.price{color:var(--pr);font-weight:700;font-size:18px}
+.price{color:var(--pr);font-weight:700;font-size:20px}
 .loc,.spec{color:var(--mu);font-size:13px}
 .spec{display:flex;gap:12px;flex-wrap:wrap}
-.cb a{margin-top:auto;text-align:center;text-decoration:none;background:var(--pr2);color:var(--pr);padding:8px;border-radius:10px;font-weight:700}
-.empty{text-align:center;color:var(--mu);padding:40px 0;grid-column:1/-1}
-dialog{border:0;border-radius:18px;background:var(--card);color:var(--tx);width:min(560px,94vw);max-height:90vh;padding:18px}
-dialog::backdrop{background:rgba(0,0,0,.5)}
+.acts{display:flex;gap:8px;margin-top:auto;padding-top:10px}
+.acts a{flex:1;text-align:center;text-decoration:none;padding:9px;border-radius:12px;font-weight:700;font-size:14px}
+.call{background:var(--pr2);color:var(--pr)}
+.wa{background:#25d366;color:#06361a}
+.empty{text-align:center;color:var(--mu);padding:50px 0;grid-column:1/-1}
+dialog{border:0;border-radius:20px;background:var(--card);color:var(--tx);width:min(560px,94vw);max-height:90vh;padding:18px}
+dialog::backdrop{background:rgba(0,0,0,.55)}
 .f{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .f .full{grid-column:1/-1}
-.f label{font-size:12px;color:var(--mu)}
 .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
-.btn.sec{background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
-footer{text-align:center;color:var(--mu);font-size:13px;padding:16px}
+footer{text-align:center;color:var(--mu);font-size:13px;padding:20px}
+.acts{flex-wrap:wrap}.acts .mp{flex:1 1 100%;background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
 </style>
 </head>
 <body>
-<header><div class="bar">
-<div class="logo">🏠 <span data-i="brand"></span></div>
-<div style="display:flex;gap:8px">
-<button class="btn ghost" id="lang">English</button>
-<button class="btn" id="add" data-i="add"></button>
-</div></div></header>
-
-<section class="hero"><h1 data-i="h1"></h1><p data-i="sub"></p></section>
-
+<header><div class="top"><div class="logo"><i>🏠</i><span data-i="brand"></span></div><div style="display:flex;gap:8px"><button class="btn sec" id="lang">English</button><button class="btn" id="add" data-i="add"></button></div></div></header>
 <main>
-<div class="filters">
-<div class="tabs">
-<button class="tab on" data-m="">الكل</button>
-<button class="tab" data-m="sale"></button>
-<button class="tab" data-m="rent"></button>
+<div class="tool">
+<div class="seg"><button class="tab on" data-m=""></button><button class="tab" data-m="sale"></button><button class="tab" data-m="rent"></button></div>
+<div class="sr"><input id="q" type="search"></div>
+<button class="btn sec" id="fbtn">⚙️ <span data-i="flt"></span><span id="fcount"></span></button>
 </div>
-<div><label data-i="q"></label><input id="q" type="search"></div>
+<div class="fp" id="fp">
 <div><label data-i="city"></label><select id="city"></select></div>
 <div><label data-i="ptype"></label><select id="ptype"></select></div>
 <div><label data-i="pmin"></label><input id="pmin" type="number" min="0" inputmode="numeric"></div>
@@ -77,12 +80,12 @@ footer{text-align:center;color:var(--mu);font-size:13px;padding:16px}
 <div><label data-i="beds"></label><select id="beds"></select></div>
 <div><label data-i="amin"></label><input id="amin" type="number" min="0" inputmode="numeric"></div>
 <div><label data-i="sort"></label><select id="sort"></select></div>
+<div class="fx"><button class="link" id="reset" data-i="reset"></button><button class="btn" id="fclose" data-i="show"></button></div>
 </div>
-<div class="meta"><span id="count"></span><button class="link" id="reset" data-i="reset"></button></div>
+<div class="meta" id="count"></div>
 <div class="grid" id="grid"></div>
 </main>
 <footer data-i="foot"></footer>
-
 <dialog id="dlg"><form method="dialog" class="f" id="form">
 <h3 class="full" style="margin:0" data-i="addT"></h3>
 <div class="full"><label data-i="fTitle"></label><input name="title" required maxlength="80"></div>
@@ -96,10 +99,10 @@ footer{text-align:center;color:var(--mu);font-size:13px;padding:16px}
 <div><label data-i="baths"></label><input name="baths" type="number" min="0" max="20" value="2" inputmode="numeric"></div>
 <div><label data-i="area"></label><input name="area" type="number" min="1" required inputmode="numeric"></div>
 <div><label data-i="phone"></label><input name="phone" type="tel" required placeholder="07XX XXX XXXX" dir="ltr"></div>
+<div class="full"><label data-i="map"></label><input name="loc" dir="ltr" placeholder="https://maps.app.goo.gl/...  /  33.3152, 44.3661"><div style="font-size:12px;color:var(--mu)" data-i="maphint"></div><button type="button" class="link" id="myloc" data-i="myloc"></button></div>
 <div class="full"><label data-i="desc"></label><textarea name="desc" rows="3" maxlength="400"></textarea></div>
 <div class="row full"><button type="button" class="btn sec" id="cancel" data-i="cancel"></button><button class="btn" type="submit" data-i="publish"></button></div>
 </form></dialog>
-
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import{getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
@@ -109,8 +112,8 @@ const firebaseConfig={apiKey:"AIzaSyBBr8-4JxczuFJXbJ7F8zNQhdKcYbZZEC8",authDomai
 const RATE=1520;
 const CITIES=[["baghdad","بغداد","Baghdad"],["basra","البصرة","Basra"],["nineveh","الموصل","Mosul"],["erbil","أربيل","Erbil"],["sulaymaniyah","السليمانية","Sulaymaniyah"],["duhok","دهوك","Duhok"],["kirkuk","كركوك","Kirkuk"],["najaf","النجف","Najaf"],["karbala","كربلاء","Karbala"],["anbar","الرمادي","Ramadi"],["diyala","بعقوبة","Baqubah"],["babil","الحلة","Hillah"],["wasit","الكوت","Kut"],["dhiqar","الناصرية","Nasiriyah"],["maysan","العمارة","Amarah"],["muthanna","السماوة","Samawah"],["qadisiyyah","الديوانية","Diwaniyah"],["salahaldin","تكريت","Tikrit"],["halabja","حلبجة","Halabja"]];
 const TYPES=[["house","بيت","House","🏡"],["apartment","شقة","Apartment","🏢"],["villa","فيلا","Villa","🏘️"],["land","أرض","Land","🟫"],["shop","محل تجاري","Shop","🏪"],["office","مكتب","Office","💼"]];
-const T={ar:{brand:"عقارات العراق",add:"+ أضف عقارك",h1:"ابحث عن بيتك في أي مدينة عراقية",sub:"بيع وإيجار بيوت وشقق وأراضي في جميع المحافظات",q:"بحث بالكلمات",city:"المدينة",ptype:"نوع العقار",pmin:"أقل سعر ($)",pmax:"أعلى سعر ($)",beds:"غرف النوم",amin:"أقل مساحة (م²)",sort:"الترتيب",reset:"مسح الفلاتر",all:"الكل",allC:"كل المدن",allT:"كل الأنواع",any:"أي عدد",sale:"للبيع",rent:"للإيجار",newest:"الأحدث",pa:"السعر: الأقل أولاً",pd:"السعر: الأعلى أولاً",aD:"المساحة: الأكبر",found:n=>`${n} عقار`,none:"لا توجد نتائج مطابقة",call:"اتصل بالمالك",mo:"/شهرياً",bed:"غرف",bath:"حمامات",m2:"م²",foot:"عقارات العراق © 2026",addT:"أضف عقارك",fTitle:"عنوان الإعلان",mode:"نوع العرض",hood:"الحي / المنطقة",price:"السعر",cur:"العملة",baths:"الحمامات",area:"المساحة (م²)",phone:"رقم الهاتف",desc:"وصف",cancel:"إلغاء",publish:"نشر الإعلان",lang:"English",del:"حذف إعلاني",delq:"هل تريد حذف هذا الإعلان؟",err:"تعذّر النشر، حاول مرة أخرى"},
-en:{brand:"Iraq Estates",add:"+ List property",h1:"Find your home in any Iraqi city",sub:"Houses, apartments and land for sale or rent across all governorates",q:"Keyword search",city:"City",ptype:"Property type",pmin:"Min price ($)",pmax:"Max price ($)",beds:"Bedrooms",amin:"Min area (m²)",sort:"Sort by",reset:"Clear filters",all:"All",allC:"All cities",allT:"All types",any:"Any",sale:"For sale",rent:"For rent",newest:"Newest",pa:"Price: low to high",pd:"Price: high to low",aD:"Area: largest",found:n=>`${n} propert${n==1?"y":"ies"}`,none:"No matching results",call:"Call owner",mo:"/month",bed:"beds",bath:"baths",m2:"m²",foot:"Iraq Estates © 2026",addT:"List your property",fTitle:"Listing title",mode:"Listing type",hood:"Neighborhood",price:"Price",cur:"Currency",baths:"Bathrooms",area:"Area (m²)",phone:"Phone number",desc:"Description",cancel:"Cancel",publish:"Publish listing",lang:"العربية",del:"Delete my listing",delq:"Delete this listing?",err:"Could not publish, please try again"}};
+const T={ar:{brand:"عقارات العراق",add:"+ أضف عقارك",h1:"ابحث عن بيتك في أي مدينة عراقية",sub:"بيع وإيجار بيوت وشقق وأراضي في جميع المحافظات",q:"بحث بالكلمات",city:"المدينة",ptype:"نوع العقار",pmin:"أقل سعر ($)",pmax:"أعلى سعر ($)",beds:"غرف النوم",amin:"أقل مساحة (م²)",sort:"الترتيب",reset:"مسح الفلاتر",all:"الكل",allC:"كل المدن",allT:"كل الأنواع",any:"أي عدد",sale:"للبيع",rent:"للإيجار",newest:"الأحدث",pa:"السعر: الأقل أولاً",pd:"السعر: الأعلى أولاً",aD:"المساحة: الأكبر",found:n=>`${n} عقار`,none:"لا توجد نتائج مطابقة",call:"اتصل بالمالك",mo:"/شهرياً",bed:"غرف",bath:"حمامات",m2:"م²",foot:"عقارات العراق © 2026",addT:"أضف عقارك",fTitle:"عنوان الإعلان",mode:"نوع العرض",hood:"الحي / المنطقة",price:"السعر",cur:"العملة",baths:"الحمامات",area:"المساحة (م²)",phone:"رقم الهاتف",desc:"وصف",cancel:"إلغاء",publish:"نشر الإعلان",lang:"English",del:"حذف إعلاني",delq:"هل تريد حذف هذا الإعلان؟",err:"تعذّر النشر، حاول مرة أخرى",flt:"تصفية",wa:"واتساب",newb:"جديد",now:"الآن",show:"عرض النتائج",map:"موقع العقار على Google Maps (اختياري)",maphint:"افتح Google Maps ← اختر المكان ← مشاركة ← نسخ الرابط، ثم الصقه هنا",myloc:"📍 استخدم موقعي الحالي",maperr:"رابط الموقع غير صحيح. الصق رابط Google Maps أو الإحداثيات",openmap:"افتح في Google Maps",wmsg:"مرحباً، أنا مهتم بإعلانك: "},
+en:{brand:"Iraq Estates",add:"+ List property",h1:"Find your home in any Iraqi city",sub:"Houses, apartments and land for sale or rent across all governorates",q:"Keyword search",city:"City",ptype:"Property type",pmin:"Min price ($)",pmax:"Max price ($)",beds:"Bedrooms",amin:"Min area (m²)",sort:"Sort by",reset:"Clear filters",all:"All",allC:"All cities",allT:"All types",any:"Any",sale:"For sale",rent:"For rent",newest:"Newest",pa:"Price: low to high",pd:"Price: high to low",aD:"Area: largest",found:n=>`${n} propert${n==1?"y":"ies"}`,none:"No matching results",call:"Call owner",mo:"/month",bed:"beds",bath:"baths",m2:"m²",foot:"Iraq Estates © 2026",addT:"List your property",fTitle:"Listing title",mode:"Listing type",hood:"Neighborhood",price:"Price",cur:"Currency",baths:"Bathrooms",area:"Area (m²)",phone:"Phone number",desc:"Description",cancel:"Cancel",publish:"Publish listing",lang:"العربية",del:"Delete my listing",delq:"Delete this listing?",err:"Could not publish, please try again",flt:"Filters",wa:"WhatsApp",newb:"New",now:"Just now",show:"Show results",map:"Property location on Google Maps (optional)",maphint:"Open Google Maps, pick the place, tap Share, Copy link, then paste it here",myloc:"📍 Use my current location",maperr:"Invalid location. Paste a Google Maps link or coordinates",openmap:"Open in Google Maps",wmsg:"Hello, I'm interested in your listing: "}};
 let lang=localStorage.getItem("lang")||"ar",mode="",user=[];
 const fb=initializeApp(firebaseConfig),auth=getAuth(fb),db=getFirestore(fb);
 const CK=new Set(CITIES.map(c=>c[0])),TK=new Set(TYPES.map(t=>t[0]));
@@ -125,7 +128,7 @@ function txt(v){return typeof v=="string"?v:v[L()]}
 function setLang(){
  const d=T[lang];document.documentElement.lang=lang;document.documentElement.dir=lang=="ar"?"rtl":"ltr";
  $$("[data-i]").forEach(e=>e.textContent=d[e.dataset.i]);
- $("#lang").textContent=d.lang;
+ $("#lang").textContent=d.lang;$("#q").placeholder="🔍 "+d.q;
  $$(".tab").forEach(t=>t.textContent=t.dataset.m==""?d.all:d[t.dataset.m]);
  const keep={city:$("#city").value,ptype:$("#ptype").value,beds:$("#beds").value,sort:$("#sort").value};
  $("#city").innerHTML=opt("",d.allC)+CITIES.map(c=>opt(c[0],nm(c))).join("");
@@ -148,24 +151,31 @@ function render(){
  r.sort((a,b)=>s=="pa"?usd(a)-usd(b):s=="pd"?usd(b)-usd(a):s=="ad"?b.area-a.area:b.t-a.t);
  $("#count").textContent=d.found(r.length);
  const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+ const n=["city","ptype","pmin","pmax","beds","amin"].filter(i=>$("#"+i).value).length+(s!="new"?1:0);$("#fcount").textContent=n||"";
  $("#grid").innerHTML=r.length?r.map(x=>{
-  const ty=TYPES.find(k=>k[0]==x.type),ci=CITIES.find(k=>k[0]==x.city);
+  const ty=TYPES.find(k=>k[0]==x.type),ci=CITIES.find(k=>k[0]==x.city),mine=auth.currentUser&&x.uid==auth.currentUser.uid;
   const pr=(x.cur=="USD"?"$"+x.price.toLocaleString("en"):x.price.toLocaleString("en")+" IQD")+(x.mode=="rent"?d.mo:"");
-  return `<article class="card"><div class="thumb">${ty[3]}<span class="badge ${x.mode}">${d[x.mode]}</span></div><div class="cb"><h3>${esc(txt(x.title))}</h3><div class="price">${pr}</div><div class="loc">📍 ${nm(ci)}${x.hood&&txt(x.hood)?" — "+esc(txt(x.hood)):""}</div><div class="spec"><span>${nm(ty)}</span><span>${x.area} ${d.m2}</span>${x.beds?`<span>🛏 ${x.beds} ${d.bed}</span>`:""}${x.baths?`<span>🚿 ${x.baths} ${d.bath}</span>`:""}</div>${x.desc?`<div class="loc">${esc(x.desc)}</div>`:""}${auth.currentUser&&x.uid==auth.currentUser.uid?`<button class="link" data-del="${x.id}">🗑 ${d.del}</button>`:""}<a href="tel:${esc(x.phone)}" dir="ltr">📞 ${d.call}</a></div></article>`}).join(""):`<div class="empty">${d.none}</div>`;
+  return `<article class="card"><div class="thumb">${ty[3]}<span class="badge ${x.mode}">${d[x.mode]}</span>${Date.now()-x.t<172800000?`<span class="nw">${d.newb}</span>`:""}<span class="ago">🕒 ${ago(x.t)}</span></div><div class="cb"><h3>${esc(txt(x.title))}</h3><div class="price">${pr}</div><div class="loc">📍 ${nm(ci)}${x.hood&&txt(x.hood)?" — "+esc(txt(x.hood)):""}</div><div class="spec"><span>${nm(ty)}</span><span>${x.area} ${d.m2}</span>${x.beds?`<span>🛏 ${x.beds} ${d.bed}</span>`:""}${x.baths?`<span>🚿 ${x.baths} ${d.bath}</span>`:""}</div>${x.desc?`<div class="loc">${esc(x.desc)}</div>`:""}<div class="acts"><a class="call" href="tel:${esc(x.phone)}" dir="ltr">📞 ${d.call}</a>${safeMap(x.map)?`<a class="mp" href="${esc(safeMap(x.map))}" target="_blank" rel="noopener">🗺️ ${d.openmap}</a>`:""}<a class="wa" href="https://wa.me/${waNum(x.phone)}?text=${encodeURIComponent(d.wmsg+txt(x.title))}" target="_blank" rel="noopener">💬 ${d.wa}</a></div>${mine?`<button class="link" data-del="${x.id}">🗑 ${d.del}</button>`:""}</div></article>`}).join(""):`<div class="empty">${d.none}</div>`;
 }
+function safeMap(u){try{const p=new URL(u),h=p.hostname;return p.protocol=="https:"&&((/(^|\.)google\.[a-z.]+$/.test(h)&&(h.startsWith("maps.")||p.pathname.startsWith("/maps")))||h=="maps.app.goo.gl"||h=="goo.gl")?u:""}catch(e){return ""}}
+function normMap(v){v=(v||"").trim();if(!v)return "";if(/^-?\d{1,3}(\.\d+)?\s*,\s*-?\d{1,3}(\.\d+)?$/.test(v))return "https://www.google.com/maps?q="+v.replace(/\s/g,"");const m=v.match(/https:\/\/\S+/);return m&&safeMap(m[0])&&m[0].length<=300?m[0]:null}
+function waNum(p){let n=String(p).replace(/\D/g,"");if(n.startsWith("00"))n=n.slice(2);else if(n.startsWith("0"))n="964"+n.slice(1);return n}
+function ago(t){const m=Math.max(0,(Date.now()-t)/6e4);if(m<1)return T[lang].now;const h=m/60,dy=h/24,u=m<60?"minute":h<24?"hour":dy<30?"day":"month",v=m<60?m:h<24?h:dy<30?dy:dy/30;return new Intl.RelativeTimeFormat(lang=="ar"?"ar-u-nu-latn":"en",{numeric:"auto"}).format(-Math.floor(v),u)}
 $$(".tab").forEach(t=>t.onclick=()=>{mode=t.dataset.m;$$(".tab").forEach(x=>x.classList.toggle("on",x==t));render()});
 ["q","city","ptype","pmin","pmax","beds","amin","sort"].forEach(i=>$("#"+i).addEventListener("input",render));
 $("#reset").onclick=()=>{["q","pmin","pmax","amin"].forEach(i=>$("#"+i).value="");["city","ptype","beds"].forEach(i=>$("#"+i).value="");$("#sort").value="new";mode="";$$(".tab").forEach((x,i)=>x.classList.toggle("on",i==0));render()};
 $("#lang").onclick=()=>{lang=lang=="ar"?"en":"ar";try{localStorage.setItem("lang",lang)}catch(e){}setLang()};
 $("#add").onclick=async()=>{try{if(!auth.currentUser)await signInWithPopup(auth,new GoogleAuthProvider());$("#dlg").showModal()}catch(e){}};
+$("#fbtn").onclick=()=>$("#fp").classList.toggle("open");$("#fclose").onclick=()=>$("#fp").classList.remove("open");
+$("#myloc").onclick=()=>navigator.geolocation&&navigator.geolocation.getCurrentPosition(p=>{$("#form").loc.value=p.coords.latitude.toFixed(6)+", "+p.coords.longitude.toFixed(6)},()=>{},{enableHighAccuracy:true});
 $("#cancel").onclick=()=>$("#dlg").close();
 $("#form").onsubmit=async e=>{
- const f=e.target,u=auth.currentUser;if(!u)return;
- const o={uid:u.uid,title:f.title.value.trim(),mode:f.mode.value,type:f.type.value,city:f.city.value,hood:f.hood.value.trim(),price:+f.price.value,cur:f.cur.value,beds:+f.beds.value,baths:+f.baths.value,area:+f.area.value,phone:f.phone.value.trim(),desc:f.desc.value.trim(),createdAt:serverTimestamp()};
+ const f=e.target,u=auth.currentUser;if(!u)return;const mp=normMap(f.loc.value);if(mp===null){e.preventDefault();alert(T[lang].maperr);return}
+ const o={uid:u.uid,title:f.title.value.trim(),mode:f.mode.value,type:f.type.value,city:f.city.value,hood:f.hood.value.trim(),price:+f.price.value,cur:f.cur.value,beds:+f.beds.value,baths:+f.baths.value,area:+f.area.value,phone:f.phone.value.trim(),desc:f.desc.value.trim(),map:mp,createdAt:serverTimestamp()};
  try{await addDoc(collection(db,"listings"),o);f.reset();window.scrollTo({top:0,behavior:"smooth"})}catch(x){alert(T[lang].err)}
 };
 $("#grid").addEventListener("click",async e=>{const b=e.target.closest("[data-del]");if(b&&confirm(T[lang].delq))try{await deleteDoc(doc(db,"listings",b.dataset.del))}catch(x){}});
-setLang();
+setLang();setInterval(render,60000);
 </script>
 </body>
 </html>
