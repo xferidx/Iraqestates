@@ -36,7 +36,7 @@ main{max-width:1100px;margin:auto;padding:16px}
 .fx{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center}
 .link{background:none;border:0;color:var(--pr);cursor:pointer;font-weight:600;padding:4px 0;text-align:start}
 .meta{margin:18px 2px 10px;color:var(--mu);font-size:14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(270px,100%),1fr));gap:16px}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}
 .card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.12)}
 .thumb{height:130px;display:flex;align-items:center;justify-content:center;font-size:54px;background:linear-gradient(135deg,var(--pr2),var(--bg));position:relative}
@@ -71,10 +71,13 @@ footer{text-align:center;color:var(--mu);font-size:13px;padding:20px}
 :root:not([data-theme="light"]) .wtag{color:#0e1420}
 .wtag.rent{background:var(--ac);color:#1d1a12}.wtag.cx{background:#e5484d;color:#fff}
 .ctc a{flex:1 1 40%}.tg{background:#229ed9;color:#fff}.em{background:var(--pr2);color:var(--pr)}
+html{-webkit-text-size-adjust:100%}body{overflow-x:clip}img{max-width:100%}
+.hb{display:flex;gap:6px}.top{min-width:0}
+@media(max-width:520px){.top{padding:8px 10px;gap:6px}.logo span{display:none}.logo img{width:36px;height:36px}.btn{padding:8px 11px;font-size:13px}main{padding:12px}.grid{grid-template-columns:1fr}.cb h3{font-size:17px}}
 </style>
 </head>
 <body>
-<header><div class="top"><div class="logo"><img src="icon-192.png" alt=""><span data-i="brand"></span></div><div style="display:flex;gap:8px"><button class="btn sec" id="inst" data-i="inst" hidden></button><button class="btn sec" id="lang">English</button><button class="btn" id="add"></button></div></div></header>
+<header><div class="top"><div class="logo"><img src="icon-192.png" alt=""><span data-i="brand"></span></div><div class="hb"><button class="btn sec" id="inst" data-i="inst" hidden></button><button class="btn sec" id="lang">English</button><button class="btn" id="add"></button></div></div></header>
 <main>
 <div class="seg" style="width:fit-content;margin-bottom:12px"><button class="vt on" data-v="l" data-i="navL"></button><button class="vt" data-v="w" data-i="navW"></button></div>
 <div id="vl">
