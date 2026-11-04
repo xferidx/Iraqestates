@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>عقارات العراق | Iraq Estates</title>
+<meta name="description" content="منصة مجانية لعرض العقارات للبيع أو الإيجار في جميع محافظات العراق"><meta property="og:type" content="website"><meta property="og:title" content="عقارات العراق | Iraq Estates"><meta property="og:description" content="انشر عقارك أو ابحث عن بيتك في أي مدينة عراقية، مجاناً"><meta property="og:image" content="https://dardoor.net/icon-512.png"><meta name="twitter:card" content="summary">
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#14355e"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="عقارات العراق">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -109,6 +110,54 @@ html{-webkit-text-size-adjust:100%}body{overflow-x:clip}img{max-width:100%}
 .fts{display:flex;flex-wrap:wrap;gap:5px}.fts span{background:var(--pr2);color:var(--pr);border-radius:20px;padding:2px 10px;font-size:13px;font-weight:600}
 .hrt{display:flex;align-items:center;justify-content:center;width:auto;min-width:40px;padding:0 11px;gap:4px;border-radius:20px}
 .hrt b{font-size:14px;color:#14213a;font-weight:700}
+
+/* ===== visual refresh and motion ===== */
+body{background:radial-gradient(1100px 480px at 90% -8%,rgba(30,91,216,.10),transparent 60%),radial-gradient(900px 420px at -10% 8%,rgba(15,143,138,.10),transparent 55%),var(--bg);background-attachment:fixed}
+header,body::before{background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+header{transition:box-shadow .25s}header.sc{box-shadow:0 8px 24px rgba(0,0,0,.14)}
+.logo img{animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-3px) rotate(-3deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}}
+@keyframes fadeIn{from{opacity:0}}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px)}}
+@keyframes beat{0%{transform:scale(1)}30%{transform:scale(1.4)}60%{transform:scale(.9)}100%{transform:scale(1)}}
+@keyframes chipPop{50%{transform:scale(1.08)}}
+@keyframes dlg{from{opacity:0;transform:translateY(24px) scale(.97)}}
+@keyframes shine{to{background-position:-200% 0}}
+@keyframes drift{50%{transform:translate(-40px,30px) scale(1.15)}}
+.btn{transition:transform .15s,box-shadow .2s,filter .2s}.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}.btn:active{transform:scale(.96)}
+.btn:not(.sec):not(#add){background:linear-gradient(135deg,#1e5bd8,#0f8f8a);color:#fff}
+:root:not([data-theme="light"]) .btn:not(.sec){color:#fff}
+.tab,.vt,.wt,.chip{transition:all .2s}
+#vl,#vw{animation:fadeIn .35s both}
+.fp.open{animation:slideIn .28s ease both}
+dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}dialog::backdrop{animation:fadeIn .25s both}
+.abt{background:linear-gradient(135deg,#14355e 0%,#0f6a73 62%,#16a34a 140%);border:0;box-shadow:0 14px 32px rgba(20,53,94,.28);overflow:hidden;animation:fadeUp .6s backwards}
+.abt::after{content:"";position:absolute;top:-90px;inset-inline-end:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),transparent 65%);animation:drift 9s ease-in-out infinite;pointer-events:none}
+.abt>:not(.abx){position:relative;z-index:1}
+.abt h2{color:#fff}.abt p{color:rgba(255,255,255,.88)}
+.ab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)}
+.ab h4{color:#fff}.ab p{color:rgba(255,255,255,.92)}
+.ab.warn{background:rgba(255,140,40,.24);border-color:rgba(255,175,90,.65)}
+.abx{color:rgba(255,255,255,.85)}
+.abt a.mbtn,:root:not([data-theme="light"]) .abt a.mbtn{background:#ff7a1a;color:#fff;box-shadow:0 4px 14px rgba(255,122,26,.45)}
+.card{border-radius:20px;box-shadow:0 2px 10px rgba(20,33,58,.07);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 38px rgba(20,33,58,.2)}
+.card.an{animation:fadeUp .55s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:var(--d,0s)}
+.thumb img{transition:transform .7s cubic-bezier(.2,.8,.2,1)}.card:hover .thumb img{transform:scale(1.08)}
+.price{font-weight:800}
+.hrt{transition:transform .15s}.hrt:active{transform:scale(.85)}.hrt.on{animation:none}.hrt.pop{animation:beat .5s}
+.chip:active{transform:scale(.93)}
+.chip.on{background:#16a34a;border-color:#16a34a;color:#fff;animation:chipPop .25s}
+.chip.on::before{content:"✓ "}
+:root:not([data-theme="light"]) .chip.on{color:#fff}
+.fts span{background:rgba(22,163,74,.14);color:#15803d}
+:root:not([data-theme="light"]) .fts span{background:rgba(74,222,128,.15);color:#4ade80}
+.sk{height:360px;border-radius:20px;border:1px solid var(--bd);background:linear-gradient(100deg,var(--card) 30%,var(--pr2) 50%,var(--card) 70%);background-size:200% 100%;animation:shine 1.3s linear infinite}
+.empty::before{content:"🏠";display:block;font-size:46px;margin-bottom:6px;animation:float 3s ease-in-out infinite}
+#up{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));inset-inline-start:16px;width:46px;height:46px;border-radius:50%;border:0;background:linear-gradient(135deg,#1e5bd8,#0f8f8a);color:#fff;font-size:22px;box-shadow:0 8px 22px rgba(0,0,0,.3);opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity .3s,transform .3s;z-index:6;cursor:pointer}
+#up.on{opacity:1;transform:none;pointer-events:auto}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
@@ -146,6 +195,7 @@ html{-webkit-text-size-adjust:100%}body{overflow-x:clip}img{max-width:100%}
 <div class="grid" id="wgrid"></div>
 </div>
 </main>
+<button id="up" aria-label="↑">↑</button>
 <footer><span data-i="foot"></span> · <button class="link" id="abtShow" data-i="abtL"></button></footer>
 <dialog id="dlg"><form method="dialog" class="f" id="form">
 <h3 class="full" style="margin:0" data-i="addT"></h3>
@@ -193,7 +243,7 @@ import{getFirestore,collection,addDoc,updateDoc,deleteDoc,getDocs,setDoc,writeBa
 // الصق إعدادات مشروعك من Firebase Console هنا / paste your Firebase config here
 const firebaseConfig={apiKey:"AIzaSyBBr8-4JxczuFJXbJ7F8zNQhdKcYbZZEC8",authDomain:"estates-502c4.firebaseapp.com",projectId:"estates-502c4",storageBucket:"estates-502c4.firebasestorage.app",messagingSenderId:"201310146198",appId:"1:201310146198:web:341f98d4069a900d97bcb7"};
 const RATE=1520;
-let pics=[],lbs=[],lbi=0,phc={};const MAIL="ferid84@gmail.com";let liked=new Set(),unL=null,busy=false,fsel=new Set(),fset=new Set();
+let pics=[],lbs=[],lbi=0,phc={};const MAIL="ferid84@gmail.com";let liked=new Set(),unL=null,busy=false,fsel=new Set(),fset=new Set(),popId=null,seen=new Set(),loaded=false;
 const CITIES=[["baghdad","بغداد","Baghdad"],["basra","البصرة","Basra"],["nineveh","الموصل","Mosul"],["erbil","أربيل","Erbil"],["sulaymaniyah","السليمانية","Sulaymaniyah"],["duhok","دهوك","Duhok"],["kirkuk","كركوك","Kirkuk"],["najaf","النجف","Najaf"],["karbala","كربلاء","Karbala"],["anbar","الرمادي","Ramadi"],["diyala","بعقوبة","Baqubah"],["babil","الحلة","Hillah"],["wasit","الكوت","Kut"],["dhiqar","الناصرية","Nasiriyah"],["maysan","العمارة","Amarah"],["muthanna","السماوة","Samawah"],["qadisiyyah","الديوانية","Diwaniyah"],["salahaldin","تكريت","Tikrit"],["halabja","حلبجة","Halabja"]];
 const TYPES=[["house","بيت","House","🏡"],["apartment","شقة","Apartment","🏢"],["villa","فيلا","Villa","🏘️"],["land","أرض","Land","🟫"],["shop","محل تجاري","Shop","🏪"],["office","مكتب","Office","💼"]];
 const FEAT=[["garage","كراج","Garage","🚗"],["garden","حديقة","Garden","🌳"],["pool","مسبح","Pool","🏊"],["ac","تبريد مركزي","Central AC","❄️"],["gen","مولدة","Generator","⚡"],["solar","طاقة شمسية","Solar power","☀️"],["elev","مصعد","Elevator","🛗"],["sec","حراسة","Security","🛡️"],["bal","شرفة","Balcony","🌇"],["roof","سطح","Roof terrace","🏙️"],["bsmt","سرداب","Basement","🧱"],["well","بئر / خزان ماء","Water tank / well","💧"],["net","إنترنت","Internet","📶"],["fire","مدفأة","Fireplace","🔥"],["igar","حديقة داخلية","Inner garden","🪴"],["sauna","ساونا","Sauna","🧖"]];
@@ -206,7 +256,7 @@ en:{brand:"Iraq Estates",add:"+ List property",h1:"Find your home in any Iraqi c
 let lang=localStorage.getItem("lang")||"ar",mode="",user=[],editId=null,wl=[],wm="",view="l";
 const fb=initializeApp(firebaseConfig),auth=getAuth(fb);let db;try{db=initializeFirestore(fb,{localCache:persistentLocalCache({tabManager:persistentMultipleTabManager()})})}catch(e){db=getFirestore(fb)}
 const CK=new Set(CITIES.map(c=>c[0])),TK=new Set(TYPES.map(t=>t[0]));
-onSnapshot(query(collection(db,"listings"),orderBy("createdAt","desc"),limit(100)),sn=>{user=sn.docs.map(d=>({...d.data(),id:d.id,t:d.data().createdAt?.toMillis?.()||Date.now()})).filter(x=>CK.has(x.city)&&TK.has(x.type));render()},()=>{});
+onSnapshot(query(collection(db,"listings"),orderBy("createdAt","desc"),limit(100)),sn=>{loaded=true;user=sn.docs.map(d=>({...d.data(),id:d.id,t:d.data().createdAt?.toMillis?.()||Date.now()})).filter(x=>CK.has(x.city)&&TK.has(x.type));render()},()=>{loaded=true;render()});
 onSnapshot(query(collection(db,"wanted"),orderBy("createdAt","desc"),limit(200)),sn=>{wl=sn.docs.map(d=>({...d.data(),id:d.id,t:d.data().createdAt?.toMillis?.()||Date.now()})).filter(x=>CK.has(x.city));rw()},()=>{});
 onAuthStateChanged(auth,u=>{if(unL){unL();unL=null}liked=new Set();if(u)unL=onSnapshot(collection(db,"users",u.uid,"likes"),sn=>{liked=new Set(sn.docs.map(d=>d.id));render()},()=>{});render();rw()});
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -242,10 +292,11 @@ function render(){
  $("#count").textContent=d.found(r.length);
  const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
  const n=["city","ptype","pmin","pmax","beds","amin","own","furn","age"].filter(i=>$("#"+i).value).length+(s!="new"?1:0)+($("#neg").checked?1:0)+(fset.size?1:0);$("#fcount").textContent=n||"";
- $("#grid").innerHTML=r.length?r.map(x=>{
+ $("#grid").innerHTML=!loaded?'<div class="sk"></div>'.repeat(6):r.length?r.map((x,i)=>{
   const ty=TYPES.find(k=>k[0]==x.type),ci=CITIES.find(k=>k[0]==x.city),mine=auth.currentUser&&x.uid==auth.currentUser.uid,cl=x.status=="closed",ex=Date.now()-x.t>=5184e6,ph=okTh(x.thumb)?[x.thumb]:[];
   const pr=(x.cur=="USD"?"$"+x.price.toLocaleString("en"):x.price.toLocaleString("en")+" IQD")+(x.mode=="rent"?d.mo:"");
-  return `<article class="card${cl||ex?" dim":""}"><div class="thumb${ph.length?" ph":""}"${ph.length?` data-ph="${x.id}"`:""}>${ph.length?`<img src="${ph[0]}" alt="" loading="lazy">`:ty[3]}${x.pn>1?`<div class="dots">${"<i></i>".repeat(Math.min(+x.pn||0,4))}</div>`:""}<span class="badge ${x.mode}">${d[x.mode]}</span>${Date.now()-x.t<172800000?`<span class="nw">${d.newb}</span>`:""}${cl||ex?`<span class="cl">${cl?(x.mode=="rent"?d.rented:d.sold):d.exp}</span>`:""}<button class="hrt${liked.has(x.id)?" on":""}" data-fav="${x.id}" aria-label="♥">${liked.has(x.id)?"♥":"♡"}${(+x.likes||0)>0?`<b>${+x.likes}</b>`:""}</button><span class="ago">🕒 ${ago(x.t)}</span></div><div class="cb"><h3>${esc(txt(x.title))}</h3><div class="price">${pr}</div><div class="loc">📍 ${nm(ci)}${x.hood&&txt(x.hood)?" — "+esc(txt(x.hood)):""}</div><div class="spec"><span>${nm(ty)}</span><span class="ar">${x.area} ${d.m2}</span>${x.beds?`<span>🛏 ${x.beds} ${d.bed}</span>`:""}${x.baths?`<span>🚿 ${x.baths} ${d.bath}</span>`:""}${x.floor?`<span>🏢 ${d.fl} ${x.floor}</span>`:""}${x.furn?`<span>🛋 ${lab(FURN,x.furn)}</span>`:""}</div>${x.own||x.age||x.neg?`<div class="spec">${x.own?`<span>📄 ${lab(OWN,x.own)}</span>`:""}${x.age?`<span>🗓 ${lab(AGE,x.age)}</span>`:""}${x.neg?`<span class="ng">🤝 ${d.negb}</span>`:""}</div>`:""}${(()=>{const l=(x.feat||[]).map(ftl).filter(Boolean);return l.length?`<div class="fts">${l.slice(0,4).map(t=>`<span>${t}</span>`).join("")}${l.length>4?`<span>+${l.length-4}</span>`:""}</div>`:""})()}${x.desc?`<div class="loc">${esc(x.desc)}</div>`:""}<div class="acts"><a class="call" href="tel:${esc(x.phone)}" dir="ltr">📞 ${d.call}</a>${safeMap(x.map)?`<a class="mp" href="${esc(safeMap(x.map))}" target="_blank" rel="noopener">🗺️ ${d.openmap}</a>`:""}<a class="wa" href="https://wa.me/${waNum(x.phone)}?text=${encodeURIComponent(d.wmsg+txt(x.title))}" target="_blank" rel="noopener">💬 ${d.wa}</a></div>${mine?`<div class="own"><button class="link" data-act="edit" data-id="${x.id}">✏️ ${d.edit}</button><button class="link" data-act="close" data-id="${x.id}">${cl?"↩️ "+d.reopen:"✅ "+d.mk}</button><button class="link" data-act="renew" data-id="${x.id}">🔄 ${d.renew}</button><button class="link" data-act="del" data-id="${x.id}">🗑 ${d.del}</button></div>`:""}</div></article>`}).join(""):`<div class="empty">${d.none}</div>`;
+  return `<article class="card${cl||ex?" dim":""}${seen.has(x.id)?"":" an"}" style="--d:${Math.min(i,8)*.06}s"><div class="thumb${ph.length?" ph":""}"${ph.length?` data-ph="${x.id}"`:""}>${ph.length?`<img src="${ph[0]}" alt="" loading="lazy">`:ty[3]}${x.pn>1?`<div class="dots">${"<i></i>".repeat(Math.min(+x.pn||0,4))}</div>`:""}<span class="badge ${x.mode}">${d[x.mode]}</span>${Date.now()-x.t<172800000?`<span class="nw">${d.newb}</span>`:""}${cl||ex?`<span class="cl">${cl?(x.mode=="rent"?d.rented:d.sold):d.exp}</span>`:""}<button class="hrt${liked.has(x.id)?" on":""}${popId==x.id?" pop":""}" data-fav="${x.id}" aria-label="♥">${liked.has(x.id)?"♥":"♡"}${(+x.likes||0)>0?`<b>${+x.likes}</b>`:""}</button><span class="ago">🕒 ${ago(x.t)}</span></div><div class="cb"><h3>${esc(txt(x.title))}</h3><div class="price">${pr}</div><div class="loc">📍 ${nm(ci)}${x.hood&&txt(x.hood)?" — "+esc(txt(x.hood)):""}</div><div class="spec"><span>${nm(ty)}</span><span class="ar">${x.area} ${d.m2}</span>${x.beds?`<span>🛏 ${x.beds} ${d.bed}</span>`:""}${x.baths?`<span>🚿 ${x.baths} ${d.bath}</span>`:""}${x.floor?`<span>🏢 ${d.fl} ${x.floor}</span>`:""}${x.furn?`<span>🛋 ${lab(FURN,x.furn)}</span>`:""}</div>${x.own||x.age||x.neg?`<div class="spec">${x.own?`<span>📄 ${lab(OWN,x.own)}</span>`:""}${x.age?`<span>🗓 ${lab(AGE,x.age)}</span>`:""}${x.neg?`<span class="ng">🤝 ${d.negb}</span>`:""}</div>`:""}${(()=>{const l=(x.feat||[]).map(ftl).filter(Boolean);return l.length?`<div class="fts">${l.map(t=>`<span>${t}</span>`).join("")}</div>`:""})()}${x.desc?`<div class="loc">${esc(x.desc)}</div>`:""}<div class="acts"><a class="call" href="tel:${esc(x.phone)}" dir="ltr">📞 ${d.call}</a>${safeMap(x.map)?`<a class="mp" href="${esc(safeMap(x.map))}" target="_blank" rel="noopener">🗺️ ${d.openmap}</a>`:""}<a class="wa" href="https://wa.me/${waNum(x.phone)}?text=${encodeURIComponent(d.wmsg+txt(x.title))}" target="_blank" rel="noopener">💬 ${d.wa}</a></div>${mine?`<div class="own"><button class="link" data-act="edit" data-id="${x.id}">✏️ ${d.edit}</button><button class="link" data-act="close" data-id="${x.id}">${cl?"↩️ "+d.reopen:"✅ "+d.mk}</button><button class="link" data-act="renew" data-id="${x.id}">🔄 ${d.renew}</button><button class="link" data-act="del" data-id="${x.id}">🗑 ${d.del}</button></div>`:""}</div></article>`}).join(""):`<div class="empty">${d.none}</div>`;
+ if(loaded)setTimeout(()=>r.forEach(x=>seen.add(x.id)),900);
 }
 function safeMap(u){try{const p=new URL(u),h=p.hostname;return p.protocol=="https:"&&((/(^|\.)google\.[a-z.]+$/.test(h)&&(h.startsWith("maps.")||p.pathname.startsWith("/maps")))||h=="maps.app.goo.gl"||h=="goo.gl")?u:""}catch(e){return ""}}
 function normMap(v){v=(v||"").trim();if(!v)return "";if(/^-?\d{1,3}(\.\d+)?\s*,\s*-?\d{1,3}(\.\d+)?$/.test(v))return "https://www.google.com/maps?q="+v.replace(/\s/g,"");const m=v.match(/https:\/\/\S+/);return m&&safeMap(m[0])&&m[0].length<=300?m[0]:null}
@@ -262,9 +313,9 @@ function wInit(){const f=$("#wform"),d=T[lang],cv=$("#wcity").value,cs=CITIES.ma
 function rw(){const d=T[lang],c=$("#wcity").value,me=auth.currentUser;
  const r=wl.filter(x=>((me&&x.uid==me.uid)||(x.status!="closed"&&Date.now()-x.t<2592e6))&&(!wm||x.mode==wm)&&(!c||x.city==c));
  $("#wcount").textContent=d.wfound(r.length);
- $("#wgrid").innerHTML=r.length?r.map(x=>{
+ $("#wgrid").innerHTML=r.length?r.map((x,i)=>{
   const mine=me&&x.uid==me.uid,cl=x.status=="closed",ex=Date.now()-x.t>=2592e6,ci=CITIES.find(k=>k[0]==x.city),tg=tgU(x.tg),ml=okMail(x.email||"")?x.email:"";
-  return `<article class="card${cl||ex?" dim":""}"><div class="wh"><span class="wtag ${x.mode}">${x.mode=="rent"?d.wrent:d.wbuy}</span>${cl||ex?`<span class="wtag cx">${cl?d.fin:d.exp}</span>`:""}<span class="wago">🕒 ${ago(x.t)}</span></div><div class="cb"><h3>📍 ${nm(ci)} — ${esc(x.hood)}</h3><div class="loc">🎯 ${lab(PUR,x.purpose)}</div>${x.desc?`<div class="loc">${esc(x.desc)}</div>`:""}<div class="acts ctc">${x.phone?`<a class="call" href="tel:${esc(x.phone)}" dir="ltr">📞 ${d.wcall}</a>`:""}${x.wa?`<a class="wa" href="https://wa.me/${waNum(x.wa)}?text=${encodeURIComponent(d.wwa+nm(ci)+" — "+x.hood)}" target="_blank" rel="noopener">💬 ${d.wa}</a>`:""}${tg?`<a class="tg" href="https://t.me/${tg}" target="_blank" rel="noopener">✈️ ${d.tg}</a>`:""}${ml?`<a class="em" href="mailto:${esc(ml)}">✉️ ${d.em}</a>`:""}</div>${mine?`<div class="own"><button class="link" data-wact="close" data-id="${x.id}">${cl?"↩️ "+d.reopen:"✅ "+d.fin2}</button><button class="link" data-wact="renew" data-id="${x.id}">🔄 ${d.renew}</button><button class="link" data-wact="del" data-id="${x.id}">🗑 ${d.del}</button></div>`:""}</div></article>`}).join(""):`<div class="empty">${d.wnone}</div>`}
+  return `<article class="card${cl||ex?" dim":""}${seen.has(x.id)?"":" an"}" style="--d:${Math.min(i,8)*.06}s"><div class="wh"><span class="wtag ${x.mode}">${x.mode=="rent"?d.wrent:d.wbuy}</span>${cl||ex?`<span class="wtag cx">${cl?d.fin:d.exp}</span>`:""}<span class="wago">🕒 ${ago(x.t)}</span></div><div class="cb"><h3>📍 ${nm(ci)} — ${esc(x.hood)}</h3><div class="loc">🎯 ${lab(PUR,x.purpose)}</div>${x.desc?`<div class="loc">${esc(x.desc)}</div>`:""}<div class="acts ctc">${x.phone?`<a class="call" href="tel:${esc(x.phone)}" dir="ltr">📞 ${d.wcall}</a>`:""}${x.wa?`<a class="wa" href="https://wa.me/${waNum(x.wa)}?text=${encodeURIComponent(d.wwa+nm(ci)+" — "+x.hood)}" target="_blank" rel="noopener">💬 ${d.wa}</a>`:""}${tg?`<a class="tg" href="https://t.me/${tg}" target="_blank" rel="noopener">✈️ ${d.tg}</a>`:""}${ml?`<a class="em" href="mailto:${esc(ml)}">✉️ ${d.em}</a>`:""}</div>${mine?`<div class="own"><button class="link" data-wact="close" data-id="${x.id}">${cl?"↩️ "+d.reopen:"✅ "+d.fin2}</button><button class="link" data-wact="renew" data-id="${x.id}">🔄 ${d.renew}</button><button class="link" data-wact="del" data-id="${x.id}">🗑 ${d.del}</button></div>`:""}</div></article>`}).join(""):`<div class="empty">${d.wnone}</div>`;setTimeout(()=>r.forEach(x=>seen.add(x.id)),900)}
 const okTh=u=>typeof u=="string"&&u.startsWith("data:image/jpeg;base64,")&&u.length<60000;
 const okFull=u=>typeof u=="string"&&u.startsWith("data:image/jpeg;base64,")&&u.length<300000;
 function pvRender(){$("#pv").innerHTML=pics.map((p,i)=>`<div><img src="${p.blob}" alt=""><b data-rm="${i}">×</b></div>`).join("");$("#padd").disabled=pics.length>=4}
@@ -310,7 +361,7 @@ $("#abt").onclick=e=>{if(e.target.closest("#abx")){try{localStorage.setItem("abt
 $("#abtShow").onclick=()=>{try{localStorage.removeItem("abt_hide")}catch(x){}abt();window.scrollTo({top:0,behavior:"smooth"})};
 $("#fchips").onclick=e=>{const b=e.target.closest("[data-fk]");if(!b)return;const k=b.dataset.fk;fsel.has(k)?fsel.delete(k):fsel.add(k);chipsRender()};
 $("#ffchips").onclick=e=>{const b=e.target.closest("[data-fk]");if(!b)return;const k=b.dataset.fk;fset.has(k)?fset.delete(k):fset.add(k);chipsRender();render()};
-$("#grid").addEventListener("click",async e=>{const b=e.target.closest("[data-fav]");if(!b||busy)return;const id=b.dataset.fav;busy=true;
+$("#grid").addEventListener("click",async e=>{const b=e.target.closest("[data-fav]");if(!b||busy)return;const id=b.dataset.fav;busy=true;popId=id;setTimeout(()=>{popId=null},700);
  try{if(!auth.currentUser)await signInWithPopup(auth,new GoogleAuthProvider());const u=auth.currentUser;if(u){const lr=doc(db,"users",u.uid,"likes",id),pr=doc(db,"listings",id),bt=writeBatch(db);if(liked.has(id)){bt.delete(lr);bt.update(pr,{likes:increment(-1)})}else{bt.set(lr,{t:serverTimestamp()});bt.update(pr,{likes:increment(1)})}await bt.commit()}}catch(x){}busy=false});
 $$(".vt").forEach(t=>t.onclick=()=>{view=t.dataset.v;$$(".vt").forEach(x=>x.classList.toggle("on",x==t));$("#vl").hidden=view!="l";$("#vw").hidden=view!="w";updAdd()});
 $$(".wt").forEach(t=>t.onclick=()=>{wm=t.dataset.w;$$(".wt").forEach(x=>x.classList.toggle("on",x==t));rw()});
@@ -326,6 +377,9 @@ $("#wgrid").addEventListener("click",async e=>{const b=e.target.closest("[data-w
 let dp;addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;$("#inst").hidden=false});
 $("#inst").onclick=async()=>{if(dp){dp.prompt();await dp.userChoice;dp=null;$("#inst").hidden=true}};
 if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+addEventListener("scroll",()=>{$("header").classList.toggle("sc",scrollY>8);$("#up").classList.toggle("on",scrollY>600)},{passive:true});
+$("#up").onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
+setTimeout(()=>{if(!loaded){loaded=true;render()}},8000);
 setLang();setInterval(()=>{render();rw()},60000);
 </script>
 </body>
