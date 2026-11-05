@@ -279,6 +279,15 @@ header .btn{font-size:13px!important;padding:10px 12px!important;line-height:1.3
 #form .chip{font-size:14px;padding:7px 13px}
 #form .pv div{width:72px;height:72px}#form #padd{font-size:15px;padding:10px 16px}
 .fbar{padding:8px 10px calc(env(safe-area-inset-bottom,0px) + 8px)}.fbar .btn{font-size:16px;padding:12px}
+
+.cats{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;margin-top:10px;scrollbar-width:none;scroll-snap-type:x proximity}
+.cats::-webkit-scrollbar{display:none}
+.cat{flex:none;display:flex;align-items:center;gap:7px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:30px;padding:7px 12px;font-size:14px;cursor:pointer;scroll-snap-align:start;transition:all .2s;box-shadow:0 2px 8px rgba(20,33,58,.07)}
+.cat i{font-style:normal;font-size:20px}.cat b{font-weight:700}
+.cat em{font-style:normal;font-size:12px;font-weight:800;min-width:24px;height:24px;border-radius:12px;background:var(--pr2);color:var(--pr);display:grid;place-items:center;padding:0 6px}
+.cat:hover{transform:translateY(-2px)}.cat:active{transform:scale(.94)}
+.cat.on{background:linear-gradient(135deg,#16a34a,#0f8f8a);border-color:transparent;color:#fff;box-shadow:0 6px 16px rgba(22,163,74,.4)}
+.cat.on em{background:rgba(255,255,255,.25);color:#fff}
 </style>
 </head>
 <body>
@@ -311,6 +320,7 @@ header .btn{font-size:13px!important;padding:10px 12px!important;line-height:1.3
 <div class="fx2"><label data-i="feat"></label><div id="ffchips" class="chips"></div></div>
 <div class="fx"><button class="link" id="reset" data-i="reset"></button><button class="btn" id="fclose" data-i="show"></button></div>
 </div>
+<div class="cats" id="cats"></div>
 <div class="meta" id="count"></div>
 <div class="grid" id="grid"></div>
 </div>
@@ -428,8 +438,8 @@ function setLang(){
 function render(){
  const d=T[lang],q=$("#q").value.trim().toLowerCase(),c=$("#city").value,p=$("#ptype").value,
  mn=+$("#pmin").value||0,mx=+$("#pmax").value||Infinity,b=+$("#beds").value||0,am=+$("#amin").value||0,ow=$("#own").value,fu=$("#furn").value,ag=$("#age").value,ng=$("#neg").checked;
- let r=user.filter(x=>(!mode||x.mode==mode)&&(!c||x.city==c)&&(!p||x.type==p)&&usd(x)>=mn&&usd(x)<=mx&&x.beds>=b&&x.area>=am&&vis(x)&&(!ow||x.own==ow)&&(!fu||x.furn==fu)&&(!ag||x.age==ag)&&(!ng||x.neg)&&(!fset.size||[...fset].every(k=>(x.feat||[]).includes(k)))&&
-  (!q||(txt(x.title)+" "+txt(x.hood)+" "+(x.desc||"")+" "+nm(CITIES.find(k=>k[0]==x.city))).toLowerCase().includes(q)));
+ const pass=(x,sk)=>(!mode||x.mode==mode)&&(!c||x.city==c)&&(sk||!p||x.type==p)&&usd(x)>=mn&&usd(x)<=mx&&x.beds>=b&&x.area>=am&&vis(x)&&(!ow||x.own==ow)&&(!fu||x.furn==fu)&&(!ag||x.age==ag)&&(!ng||x.neg)&&(!fset.size||[...fset].every(k=>(x.feat||[]).includes(k)))&&
+  (!q||(txt(x.title)+" "+txt(x.hood)+" "+(x.desc||"")+" "+nm(CITIES.find(k=>k[0]==x.city))).toLowerCase().includes(q));let r=user.filter(x=>pass(x,0));const cc={};let tot=0;user.forEach(x=>{if(pass(x,1)){cc[x.type]=(cc[x.type]||0)+1;tot++}});catsRender(cc,tot);
  const s=$("#sort").value;
  r.sort((a,b)=>s=="pa"?usd(a)-usd(b):s=="pd"?usd(b)-usd(a):s=="ad"?b.area-a.area:s=="lk"?((+b.likes||0)-(+a.likes||0))||(b.t-a.t):b.t-a.t);
  $("#count").textContent=d.found(r.length);
@@ -494,6 +504,8 @@ function vidParse(u){u=(u||"").trim();let m=u.match(/^https:\/\/(?:www\.)?instag
 function normVid(v){v=(v||"").trim();if(!v)return "";if(/^(www\.)?(instagram|tiktok)\.com\//i.test(v))v="https://"+v;v=v.replace(/^http:/i,"https:").split("?")[0];return v.length<=250&&vidParse(v)?v:null}
 const vidSrc=p=>p.k=="ig"?`https://www.instagram.com/${p.t}/${p.id}/embed`:`https://www.tiktok.com/embed/v2/${p.id}`;
 function normWeb(v){v=(v||"").trim();if(!v)return "";if(!/^https?:\/\//i.test(v)){if(!/^[\w-]+(\.[\w-]+)+(\/\S*)?$/i.test(v))return null;v="https://"+v}v=v.replace(/^http:/i,"https:");try{const u=new URL(v);return u.protocol=="https:"&&u.hostname.includes(".")&&u.href.length<=250?u.href:null}catch(e){return null}}
+function catsRender(cc,total){const el=$("#cats");if(!loaded){el.innerHTML="";return}const d=T[lang],p=$("#ptype").value;
+ el.innerHTML=`<button class="cat${p?"":" on"}" data-t=""><i>🏘️</i><b>${d.all}</b><em>${total}</em></button>`+TYPES.filter(t=>cc[t[0]]||t[0]==p).map(t=>`<button class="cat${p==t[0]?" on":""}" data-t="${t[0]}"><i>${t[3]}</i><b>${nm(t)}</b><em>${cc[t[0]]||0}</em></button>`).join("")}
 function syncForm(){const f=$("#form"),d=T[lang],sh=f.type.value=="villa"&&f.mode.value=="rent",ht=f.type.value=="hotel"||f.mode.value=="book";$("#shbox").hidden=!sh;$("#htbox").hidden=!ht;f.price.required=!sh;f.price.previousElementSibling.textContent=f.mode.value=="book"?d.pnight:sh?d.popt:d.price}
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2200)}
 function showDp(){$("#dp").classList.add("open");document.body.style.overflow="hidden"}
@@ -566,6 +578,7 @@ const favH=async e=>{const b=e.target.closest("[data-fav]");if(!b||busy)return;c
  try{if(!auth.currentUser)await signInWithPopup(auth,new GoogleAuthProvider());const u=auth.currentUser;if(u){const lr=doc(db,"users",u.uid,"likes",id),pr=doc(db,"listings",id),bt=writeBatch(db);if(liked.has(id)){bt.delete(lr);bt.update(pr,{likes:increment(-1)})}else{bt.set(lr,{t:serverTimestamp()});bt.update(pr,{likes:increment(1)})}await bt.commit()}}catch(x){}busy=false};$("#grid").addEventListener("click",favH);$("#dp").addEventListener("click",favH);
 {const f=$("#form");f.type.onchange=()=>{if(f.type.value=="hotel")f.mode.value="book";syncForm()};f.mode.onchange=syncForm}
 $("#grid").addEventListener("click",e=>{if(e.target.closest("a,button,[data-fav],[data-act]"))return;const c=e.target.closest(".card");if(!c||!c.dataset.id)return;navApp=true;location.hash="#/l/"+c.dataset.id});
+$("#cats").addEventListener("click",e=>{const b=e.target.closest(".cat");if(!b)return;const t=b.dataset.t,sel=$("#ptype");sel.value=sel.value==t?"":t;render();const on=$("#cats .cat.on");if(on)on.scrollIntoView({inline:"center",block:"nearest",behavior:"smooth"})});
 $("#xcl").onclick=()=>$("#dlg").close();
 $("#dlg").addEventListener("close",()=>{document.body.style.overflow=$("#dp").classList.contains("open")?"hidden":"";if(location.hash==="#/add"){if(navForm){navForm=false;history.back()}else history.replaceState(null,"",location.pathname+location.search)}else navForm=false});
 $("#dpb").onclick=()=>{if(navApp)history.back();else{history.replaceState(null,"",location.pathname+location.search);hideDp()}};
